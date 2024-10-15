@@ -1,11 +1,11 @@
 # CityTransportProject
 Our project highlights the issue of the lack of public transportation in Kłobuck city and presents a solution through our project of a menagment program for such transportation. The project includes documentation a complete frontend and backend design for entire system. Introducing public transportation in Kłobuck city would improve traffic flow and raise the standard of living in Kłobuck.
 
-Frontend:
+Frontend: <br>
 Michał Nosalik <br>
 Tester, Graphic designer - Wiktor Stysiński
 
-Backend:
+Backend: <br>
 Miłosz Szlama<br>
 Tester - Patryk Nocuń
 
