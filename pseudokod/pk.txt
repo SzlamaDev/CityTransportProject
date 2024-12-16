@@ -1,0 +1,17 @@
+Object bilet (typ, linia, czas_kupna)
+
+function buyTicket(typ, linia, rodzaj_płatnosci):
+	var przecena
+	if (typ = ulgowy):
+		przecena = 20%
+	else:
+		przecena = 0
+	cena = 4 - 4 * przecena
+	if (rodzaj_platnosci = przelewy24):
+		platnosc = przelewy24.pay()
+	else:
+		platnosc = przetworzPlatnosc()
+	if (platnosc.ok()):
+		return bilet(typ, linia, czas_teraz)
+	else:
+		return error("wystąpił błąd")
