@@ -1,0 +1,22 @@
+object bus (linia, przystanki[], pozycja)
+object przystanek(busy[], czas_przyjazdu, pozycja)
+
+bus[] busy_w_systemie
+przystanek[] przystanki_w_systemie
+
+
+function searchStopByTime(czas_odjazdu):
+	przystanek[] wynik
+	foreach przystanek in przystanki_w_systemie:
+		if(przystanek.czas_przyjazdu > czas_odjazdu &&
+		przystanek.czas_przyjazdu < czas_odjazdu + 1h):
+			wynik += przystanek
+	return wynik
+	
+searchStopByNumber(nr_linii)
+	bus[] wynik
+	foreach przystanek in przystanki_w_systemie:
+		foreach bus in przystanek.busy:
+			if bus.linia = nr_linii:
+				wynik += bus;
+	return wynik
