@@ -1,0 +1,66 @@
+function podajPrzystanekDocelowy():
+    print("Podaj nazwę przystanku w miejscu docelowym")
+    przystanek = input()
+    return przystanek
+
+function polaczZBazaDanych():
+    connection = MYSQL()
+    connection.real_connect(dane_polaczenia)
+    return connection
+
+function wybierzBaze(connection, nazwa_bazy):
+    connection.select_db(nazwa_bazy)
+
+function pobierzListePrzystankow(connection, kwerenda):
+    wynik = connection.query(kwerenda)
+    lista_przystankow = []
+    if wynik:
+        for i in range(connection.num_fields(wynik)):
+            wiersz = connection.fetch_row(wynik)
+            lista_przystankow.append(wiersz)
+    return lista_przystankow
+
+function wypiszListePrzystankow(lista_przystankow):
+    print("Przystanki w pobliżu:")
+    for przystanek in lista_przystankow:
+        print(przystanek)
+
+function pobierzListeAutobusow(connection, kwerenda):
+    wynik = connection.query(kwerenda)
+    lista_autobusow = []
+    if wynik:
+        for i in range(connection.num_fields(wynik)):
+            wiersz = connection.fetch_row(wynik)
+            lista_autobusow.append(wiersz)
+    return lista_autobusow
+
+function wypiszListeAutobusow(lista_autobusow):
+    print("Autobusy do celu:")
+    for autobus in lista_autobusow:
+        print(autobus)
+
+function main():
+    przystanek_docelowy = podajPrzystanekDocelowy()
+
+    connection = polaczZBazaDanych()
+    wybierzBaze(connection, "nazwa_bazy")
+
+    kwerenda_przystanki = "SELECT * FROM przystanki WHERE miejsce = '" + przystanek_docelowy + "'"
+    lista_przystankow = pobierzListePrzystankow(connection, kwerenda_przystanki)
+
+    if lista_przystankow:
+        wypiszListePrzystankow(lista_przystankow)
+        print("Wybierz przystanek z listy powyżej")
+        przystanek_wybrany = input()
+
+        kwerenda_autobusy = "SELECT * FROM autobusy WHERE przystanek = '" + przystanek_wybrany + "'"
+        lista_autobusow = pobierzListeAutobusow(connection, kwerenda_autobusy)
+
+        if lista_autobusow:
+            wypiszListeAutobusow(lista_autobusow)
+        else:
+            print("Brak autobusów do celu z wybranego przystanku")
+    else:
+        print("Brak przystanków w pobliżu miejsca docelowego")
+
+main()

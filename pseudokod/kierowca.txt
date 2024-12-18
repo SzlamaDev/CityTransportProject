@@ -1,0 +1,36 @@
+function podajLinie():
+    print("Podaj linię")
+    linia = input()
+    return linia
+
+function polaczZBazaDanych():
+    connection = MYSQL()
+    connection.real_connect(dane_polaczenia)
+    return connection
+
+function wybierzBaze(connection, nazwa_bazy):
+    connection.select_db(nazwa_bazy)
+
+function wyslijZapytanie(connection, kwerenda):
+    wynik = connection.query(kwerenda)
+    return wynik
+
+function wypiszOpoznienie(opoznienie):
+    print("Opóźnienie: " + opoznienie)
+
+function main():
+    linia = podajLinie()
+
+    connection = polaczZBazaDanych()
+    wybierzBaze(connection, "nazwa_bazy")
+
+    kwerenda = "SELECT opoznienie FROM tabela WHERE linia = " + linia
+    wynik = wyslijZapytanie(connection, kwerenda)
+
+    if wynik:
+        opoznienie = wynik["opoznienie"]  # Zakładamy, że wynik zawiera słownik z kluczem "opoznienie"
+        wypiszOpoznienie(opoznienie)
+    else:
+        print("Nie znaleziono danych dla linii: " + linia)
+
+main()
